@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do List</title>
+    <style>
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>To Do List</h1>
+    <input type="text" id="input-todo" placeholder="Enter new task...">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todo-list"></ul>
+
+    <script>
+        function addTodo() {
+            const input = document.getElementById('input-todo');
+            const todoText = input.value.trim();
+
+            if (todoText) {
+                const li = document.createElement('li');
+                li.textContent = todoText;
+
+                li.addEventListener('click', () => {
+                    li.classList.toggle('completed');
+                });
+
+                const button = document.createElement('button');
+                button.textContent = 'Delete';
+
+                button.addEventListener('click', () => {
+                    li.remove();
+                });
+
+                li.appendChild(button);
+                document.getElementById('todo-list').appendChild(li);
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Portfolio - Affan Abid</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+            <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    </head>
+<body>
+
+    <h1>welcome</h1>
+    <form method="GET" action="{% url 'home' %}">
+    {% csrf_token %}
+    <input type="text" name="q" placeholder="Search" value="{{ query }}">
+    <button type="submit">Search</button>
+    </form>
+
+    <!-- <form method="POST" action="{% url 'home' %}">
+        {%csrf_token%}
+        <input type="text" name="q" placeholder="Search">
+    </form> -->
+    <a href="{% url 'add_task' %}">Add Task</a>
+    <h2>Tasks:</h2>
+    {% for task in tasks %}       
+    <p>{{task.id}}. <b>{{task.title}}</b> {{task.status}}  {{task.due_date}}
+        <a href="{% url 'update_tasks' task.id %}">Update</a>
+        <a href="{% url 'delete_task' task.id %}">Delete</a>
+    </p>
+    {% endfor %}
+<div style="width: 80%; padding: 30px;" class="form-floating">
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+    <label for="floatingTextarea2">Comments</label>
+  </div>
+
+</body>
+</html>

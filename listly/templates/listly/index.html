@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>To do list</title>
+        <link rel="icon" type="image/x-icon" href="static/images/todo.svg" />
+            <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+  /* Include the padding and border in an element's total width and height */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Set the opacity of the text */
+  .dim-text {
+            opacity: 0.7; /* Adjust the value between 0 (completely transparent) and 1 (fully opaque) */
+  }
+
+  /* Apply the style to all anchor tags */
+  a {
+    text-decoration: none;
+    color: rgb(166, 162, 162);
+  }
+
+/* Additional styles for demonstration purposes */
+  a:hover {
+    /* You can add styles for the hover state if needed */
+    text-decoration: underline;
+    color: black;
+  }
+  /* Remove margins and padding from the list */
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Style the list items */
+  ul li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #eee;
+    font-size: 18px;
+    transition: 0.2s;
+  
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Set all odd list items to a different color (zebra-stripes) */
+  ul li:nth-child(odd) {
+    background: #f9f9f9;
+  }
+  
+  /* Darker background-color on hover */
+  ul li:hover {
+    background: #ddd;
+  }
+  
+  /* When clicked on, add a background color and strike out text */
+  ul li.checked {
+    background: #888;
+    color: #fff;
+    text-decoration: line-through;
+  }
+  
+  /* Add a "checked" mark when clicked on */
+  ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+  }
+  
+  /* Style the close button */
+  .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+  }
+  
+  .close:hover {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  /* Style the header */
+  .header {
+    background-color: #546589;
+    padding: 20px 30px;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Clear floats after the header */
+  .header:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Style the input */
+  input {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+  }
+  
+  /* Style the "Add" button */
+  .addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+  }
+  
+  .addBtn:hover {
+    background-color: #bbb;
+  }
+
+  ul {
+    list-style: none;
+  }
+    </style>
+    </head>
+<body>
+    <div class=" container rounded-3 border border-2 border-dark my-5 bg-white" style="height:auto;">
+        <div id="myDIV" class="header">
+            <a href="{% url 'home' %}"><h2>My To Do List</h2></a>
+            <div style="padding-bottom: 15px;">
+            <a href="{% url 'add_task' %}"><small>Add  task</small></a><br>
+            </div>
+            <form method="GET" action="{% url 'home' %}">
+              {% csrf_token %}
+              <input type="text" name="q" placeholder="Search" value="{{ query }}">
+              <button type="submit" class="addBtn">Search</button>
+            </form>
+          </div>
+          
+          <ul id="myUL">
+            {% for task in tasks %}
+            <li>{{task.title}}<br>
+              <span class="dim-text" style="font-size: 15px;">{{task.due_date}}</span><br>
+              <span class="dim-text" style="font-size: 15px;"><a href="{% url 'delete_task' task.id %}">Delete</a></span>
+            </li>
+            <!-- <li class="checked">Pay bills</li>
+            <li>Meet George</li>
+            <li>Buy eggs</li>
+            <li>Read a book</li>
+            <li>Organize office</li> -->
+            {% endfor %}
+          </ul>
+ </div>
+</body>
+</html>
